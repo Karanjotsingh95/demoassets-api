@@ -71,7 +71,7 @@ class cronEmail extends Command
         sleep(3);
         $path = Storage::disk('s3')->url($mail_data->filename);
         sleep(1);
-        $tbody = "<h3><a href=".$path."><img height='25px' width='25px' src='".asset('images/excel.png')."'/>Download Report</a></h3><p>A report has been created. Please check the attached file for the created report.</p>";
+        $tbody = "<h3><a download='".$mail_data->filename."' href=".$path.">Download Report</a></h3><p>A report has been created. Please check the attached file for the created report.</p>";
         // info($path);
         foreach($mail_data->emails as $email){
             $customMessage = array(
@@ -343,7 +343,6 @@ class cronEmail extends Command
                     info('Weekly report');
                     $current_day = date('l');
                     if($day==$current_day && $time->isCurrentMinute()){
-                        info('is this working?');
                         $this->sendMail($mail_data);
                     }
                 }

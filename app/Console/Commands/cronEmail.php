@@ -68,7 +68,7 @@ class cronEmail extends Command
     public function sendMail($mail_data) 
     {
         $excel = Excel::store(new ExportExcel($mail_data->assets),$mail_data->filename, 's3');
-        sleep(3);
+        sleep(5);
         $path = Storage::disk('s3')->url($mail_data->filename);
         sleep(1);
         $tbody = "<h3><a download='".$mail_data->filename."' href=".$path.">Download Report</a></h3><p>A report has been created. Please check the attached file for the created report.</p>";

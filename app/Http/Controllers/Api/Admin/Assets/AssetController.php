@@ -332,18 +332,22 @@ class AssetController extends Controller
         foreach($changed_asset->toArray() as $key => $value) {
             if($key=='region_id' && $value!=$updated_asset[$key]){
                 $updated_region = Region::where('id', $request->asset['region_id'])->first();
-                // $changed_from->region = $changed_asset['region']['region'];
-                // if($changed_asset['region']){
-                //     $changed_from->region = $changed_asset['region']['region'];
-                // }else{
-                //     $changed_from->region = 'NA';
-                // }
-                // $changed_to->region = $updated_region['region'];
+                if($changed_asset['region']){
+                    $changed_from->region = $changed_asset['region']['region'];
+                }else{
+                    $changed_from->region = 'NA';
+                }
+                $changed_to->region = $updated_region['region'];
             }else if($key=='manufacturing_site' && $value!=$updated_asset[$key]){
-                // $msite = ManufacturingSite::where('id', $value)->first();
-                // $updated_msite = ManufacturingSite::where('id', $updated_asset['manufacturing_site'])->first();
+                $updated_msite = ManufacturingSite::where('id', $updated_asset['manufacturing_site'])->first();
+                if($changed_asset['manufacturing_site']){
+                    $msite = ManufacturingSite::where('id', $value)->first();
+                    $changed_from->$key = $msite['manufacturing_site_name'];
+                }else{
+                    $changed_from->$key = 'NA';
+                }
                 // $changed_from->$key = $msite['manufacturing_site_name'];
-                // $changed_to->$key = $updated_msite['manufacturing_site_name'];
+                $changed_to->$key = $updated_msite['manufacturing_site_name'];
             }
             else if($value!=$updated_asset[$key] && $key!="updated_at"){
                 $changed_from->$key = $value;

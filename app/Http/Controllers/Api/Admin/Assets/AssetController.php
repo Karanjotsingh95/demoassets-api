@@ -332,7 +332,8 @@ class AssetController extends Controller
         foreach($changed_asset->toArray() as $key => $value) {
             if($key=='region_id' && $value!=$updated_asset[$key]){
                 $updated_region = Region::where('id', $request->asset['region_id'])->first();
-                if($changed_asset['region']){
+                info($changed_asset);
+                if($changed_asset['region_id']!=null){
                     $changed_from->region = $changed_asset['region']['region'];
                 }else{
                     $changed_from->region = 'NA';
@@ -340,7 +341,7 @@ class AssetController extends Controller
                 $changed_to->region = $updated_region['region'];
             }else if($key=='manufacturing_site' && $value!=$updated_asset[$key]){
                 $updated_msite = ManufacturingSite::where('id', $updated_asset['manufacturing_site'])->first();
-                if($changed_asset['manufacturing_site']){
+                if($changed_asset['manufacturing_site']!=null){
                     $msite = ManufacturingSite::where('id', $value)->first();
                     $changed_from->$key = $msite['manufacturing_site_name'];
                 }else{

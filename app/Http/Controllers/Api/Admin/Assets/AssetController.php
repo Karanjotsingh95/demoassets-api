@@ -332,7 +332,6 @@ class AssetController extends Controller
         foreach($changed_asset->toArray() as $key => $value) {
             if($key=='region_id' && $value!=$updated_asset[$key]){
                 $updated_region = Region::where('id', $request->asset['region_id'])->first();
-                info($changed_asset);
                 if($changed_asset['region']){
                     $changed_from->region = $changed_asset['region']['region'];
                 }else{
